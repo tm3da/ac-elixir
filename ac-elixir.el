@@ -21,7 +21,7 @@
          (completions (elixir-mode--parse-completions output)))
       (when (eql ?{ (string-to-char output))
           (if (stringp completions)
-              (list (concat (substring str (1+ (string-match "\\.\\([^\\.]*\\)$" str))) completions))
+              (list (concat (substring str (1+ (or (string-match "\\.\\([^\\.]*\\)$" str) 0))) completions))
             completions))))
 
 
@@ -29,7 +29,7 @@
   (save-excursion
     (ignore-errors
       (re-search-backward "^\\|[\s\t]+\\|>")
-      (re-search-forward "\\(:?[A-Za-z\\.]+\\)")
+      (re-search-forward "\\(:?[A-Za-z\\._]+\\)")
       (match-string 1))))
 
 (defun ac-elixir--candidates ()
